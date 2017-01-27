@@ -1,0 +1,27 @@
+###
+###
+###
+### Category1 : Storage
+### Category2 : Disk Drives and Volumes
+### Category3 : Physical and Logical Disks
+### Description : Lists information about how Autochk has been configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_AutochkSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("User Input Delay: " + objItem.UserInputDelay);
+      WScript.Echo();
+   }

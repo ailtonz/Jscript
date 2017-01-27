@@ -1,0 +1,36 @@
+###
+###
+###
+### Category1 : Applications
+### Category2 : User
+### Category3 : 
+### Description : Returns a list of features for all the software installed on a computer using Windows Installer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_SoftwareFeature", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Accesses: " + objItem.Accesses);
+      WScript.Echo("Attributes: " + objItem.Attributes);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Identifying Number: " + objItem.IdentifyingNumber);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Install State: " + objItem.InstallState);
+      WScript.Echo("Last Use: " + objItem.LastUse);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Product Name: " + objItem.ProductName);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Vendor: " + objItem.Vendor);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

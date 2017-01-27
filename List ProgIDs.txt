@@ -1,0 +1,34 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : COM and DCOM
+### Category3 : 
+### Description : Returns a list of ProgIDs (Programmatic Identifiers) found on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_ProgIDSpecification", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Check ID: " + objItem.CheckID);
+      WScript.Echo("Check Mode: " + objItem.CheckMode);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Parent: " + objItem.Parent);
+      WScript.Echo("Prog ID: " + objItem.ProgID);
+      WScript.Echo("Software Element ID: " + objItem.SoftwareElementID);
+      WScript.Echo("Software Element State: " + objItem.SoftwareElementState);
+      WScript.Echo("Target Operating System: " + objItem.TargetOperatingSystem);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

@@ -1,0 +1,34 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns Terminal Service session configuration information.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSSessionSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Active Session Limit: " + objItem.ActiveSessionLimit);
+      WScript.Echo("Broken Connection Action: " + objItem.BrokenConnectionAction);
+      WScript.Echo("Broken Connection Policy: " + objItem.BrokenConnectionPolicy);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Disconnected Session Limit: " + objItem.DisconnectedSessionLimit);
+      WScript.Echo("Idle Session Limit: " + objItem.IdleSessionLimit);
+      WScript.Echo("Reconnection Policy: " + objItem.ReconnectionPolicy);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo("Time Limit Policy: " + objItem.TimeLimitPolicy);
+      WScript.Echo();
+   }

@@ -1,0 +1,38 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Returns information about the IRQ settings on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_IRQResource", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Hardware: " + objItem.Hardware);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("IRQ Number: " + objItem.IRQNumber);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Shareable: " + objItem.Shareable);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Trigger Level: " + objItem.TriggerLevel);
+      WScript.Echo("Trigger Type: " + objItem.TriggerType);
+      WScript.Echo("Vector: " + objItem.Vector);
+      WScript.Echo();
+   }

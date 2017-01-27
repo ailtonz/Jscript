@@ -1,0 +1,55 @@
+###
+###
+###
+### Category1 : Networking
+### Category2 : Client-Side Management
+### Category3 : Retrieving Network Configuration Information
+### Description : Returns network login information for all the users of a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NetworkLoginProfile", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Account Expires: " + objItem.AccountExpires);
+      WScript.Echo("Authorization Flags: " + objItem.AuthorizationFlags);
+      WScript.Echo("Bad Password Count: " + objItem.BadPasswordCount);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Code Page: " + objItem.CodePage);
+      WScript.Echo("Comment: " + objItem.Comment);
+      WScript.Echo("Country Code: " + objItem.CountryCode);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Flags: " + objItem.Flags);
+      WScript.Echo("Full Name: " + objItem.FullName);
+      WScript.Echo("Home Directory: " + objItem.HomeDirectory);
+      WScript.Echo("Home Directory Drive: " + objItem.HomeDirectoryDrive);
+      WScript.Echo("Last Logoff: " + objItem.LastLogoff);
+      WScript.Echo("Last Logon: " + objItem.LastLogon);
+      WScript.Echo("Logon Hours: " + objItem.LogonHours);
+      WScript.Echo("Logon Server: " + objItem.LogonServer);
+      WScript.Echo("Maximum Storage: " + objItem.MaximumStorage);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number Of Logons: " + objItem.NumberOfLogons);
+      WScript.Echo("Parameters: " + objItem.Parameters);
+      WScript.Echo("Password Age: " + objItem.PasswordAge);
+      WScript.Echo("Password Expires: " + objItem.PasswordExpires);
+      WScript.Echo("Primary Group Id: " + objItem.PrimaryGroupId);
+      WScript.Echo("Privileges: " + objItem.Privileges);
+      WScript.Echo("Profile: " + objItem.Profile);
+      WScript.Echo("Script Path: " + objItem.ScriptPath);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Units Per Week: " + objItem.UnitsPerWeek);
+      WScript.Echo("User Comment: " + objItem.UserComment);
+      WScript.Echo("User Id: " + objItem.UserId);
+      WScript.Echo("User Type: " + objItem.UserType);
+      WScript.Echo("Workstations: " + objItem.Workstations);
+      WScript.Echo();
+   }

@@ -1,0 +1,42 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Task Scheduling
+### Category3 : 
+### Description : Enumerates all the scheduled tasks on a computer. Note: WMI can only enumerate scheduled tasks created using the Win32_ScheduledJob class or the At.exe utility. It cannot enumerate tasks created using the Task Scheduler.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_ScheduledJob", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Command: " + objItem.Command);
+      WScript.Echo("Days Of Month: " + objItem.DaysOfMonth);
+      WScript.Echo("Days Of Week: " + objItem.DaysOfWeek);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Elapsed Time: " + objItem.ElapsedTime);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Interact With Desktop: " + objItem.InteractWithDesktop);
+      WScript.Echo("Job Id: " + objItem.JobId);
+      WScript.Echo("Job Status: " + objItem.JobStatus);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Notify: " + objItem.Notify);
+      WScript.Echo("Owner: " + objItem.Owner);
+      WScript.Echo("Priority: " + objItem.Priority);
+      WScript.Echo("Run Repeatedly: " + objItem.RunRepeatedly);
+      WScript.Echo("Start Time: " + objItem.StartTime);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Time Submitted: " + objItem.TimeSubmitted);
+      WScript.Echo("Until Time: " + objItem.UntilTime);
+      WScript.Echo();
+   }

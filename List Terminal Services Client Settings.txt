@@ -1,0 +1,39 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about the Terminal Service client settings and policies configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSClientSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Audio Mapping: " + objItem.AudioMapping);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Clipboard Mapping: " + objItem.ClipboardMapping);
+      WScript.Echo("Color Depth: " + objItem.ColorDepth);
+      WScript.Echo("Color Depth Policy: " + objItem.ColorDepthPolicy);
+      WScript.Echo("COM Port Mapping: " + objItem.COMPortMapping);
+      WScript.Echo("Connect Client Drives At Logon: " + objItem.ConnectClientDrivesAtLogon);
+      WScript.Echo("Connection Policy: " + objItem.ConnectionPolicy);
+      WScript.Echo("Connect Printer At Logon: " + objItem.ConnectPrinterAtLogon);
+      WScript.Echo("Default To Client Printer: " + objItem.DefaultToClientPrinter);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Drive Mapping: " + objItem.DriveMapping);
+      WScript.Echo("LPT Port Mapping: " + objItem.LPTPortMapping);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo("Windows Printe rMapping: " + objItem.WindowsPrinterMapping);
+      WScript.Echo();
+   }

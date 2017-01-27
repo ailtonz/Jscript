@@ -1,0 +1,43 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Memory
+### Category3 : 
+### Description : Returns information about the configuration of DMA channels on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_DMAChannel", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Address Size: " + objItem.AddressSize);
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Burst Mode: " + objItem.BurstMode);
+      WScript.Echo("Byte Mode: " + objItem.ByteMode);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Channel Timing: " + objItem.ChannelTiming);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("DMA Channel: " + objItem.DMAChannel);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Max Transfer Size: " + objItem.MaxTransferSize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Port: " + objItem.Port);
+      WScript.Echo("Status: " + objItem.Status);
+      try { WScript.Echo("Transfer Widths: " + (objItem.TransferWidths.toArray()).join(",")); }
+         catch(e) { WScript.Echo("TransferWidths: null"); }
+      WScript.Echo("Type C Timing: " + objItem.TypeCTiming);
+      WScript.Echo("Word Mode: " + objItem.WordMode);
+      WScript.Echo();
+   }

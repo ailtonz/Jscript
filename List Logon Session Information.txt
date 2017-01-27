@@ -1,0 +1,32 @@
+###
+###
+###
+### Category1 : Desktop Management
+### Category2 : Logon Sessions
+### Category3 : 
+### Description : Returns information about logon sessions associated with the user currently logged on to a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_LogonSession", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Authentication Package: " + objItem.AuthenticationPackage);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Logon Id: " + objItem.LogonId);
+      WScript.Echo("Logon Type: " + objItem.LogonType);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Start Time: " + objItem.StartTime);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

@@ -1,0 +1,52 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Ports and Slots
+### Category3 : 
+### Description : Enumerates configuration values for all the serial ports installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_SerialPortConfiguration", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Abort Read Write On Error: " + objItem.AbortReadWriteOnError);
+      WScript.Echo("Baud Rate: " + objItem.BaudRate);
+      WScript.Echo("Binary Mode Enabled: " + objItem.BinaryModeEnabled);
+      WScript.Echo("Bits Per Byte: " + objItem.BitsPerByte);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Continue XMitOn XOff: " + objItem.ContinueXMitOnXOff);
+      WScript.Echo("CTS Outflow Control: " + objItem.CTSOutflowControl);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Discard NULL Bytes: " + objItem.DiscardNULLBytes);
+      WScript.Echo("DSR Outflow Control: " + objItem.DSROutflowControl);
+      WScript.Echo("DSR Sensitivity: " + objItem.DSRSensitivity);
+      WScript.Echo("DTR Flow Control Type: " + objItem.DTRFlowControlType);
+      WScript.Echo("EOF Character: " + objItem.EOFCharacter);
+      WScript.Echo("Error Replace Character: " + objItem.ErrorReplaceCharacter);
+      WScript.Echo("Error Replacement Enabled: " + objItem.ErrorReplacementEnabled);
+      WScript.Echo("Event Character: " + objItem.EventCharacter);
+      WScript.Echo("Is Busy: " + objItem.IsBusy);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Parity: " + objItem.Parity);
+      WScript.Echo("Parity Check Enabled: " + objItem.ParityCheckEnabled);
+      WScript.Echo("RTS Flow Control Type: " + objItem.RTSFlowControlType);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Stop Bits: " + objItem.StopBits);
+      WScript.Echo("XOff Character: " + objItem.XOffCharacter);
+      WScript.Echo("XOff XMit Threshold: " + objItem.XOffXMitThreshold);
+      WScript.Echo("XOn Character: " + objItem.XOnCharacter);
+      WScript.Echo("XOn XMit Threshold: " + objItem.XOnXMitThreshold);
+      WScript.Echo("XOn XOff InFlow Control: " + objItem.XOnXOffInFlowControl);
+      WScript.Echo("XOn XOff OutFlow Control: " + objItem.XOnXOffOutFlowControl);
+      WScript.Echo();
+   }

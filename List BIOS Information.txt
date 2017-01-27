@@ -1,0 +1,53 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Retrieves BIOS information for a computer, including BIOS version number and release date.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_BIOS", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      try { WScript.Echo("Bios Characteristics: " + (objItem.BiosCharacteristics.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Bios Characteristics: null"); }
+      try { WScript.Echo("BIOSVersion: " + (objItem.BIOSVersion.toArray()).join(",")); }
+         catch(e) { WScript.Echo("BIOSVersion: null"); }
+      WScript.Echo("Build Number: " + objItem.BuildNumber);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Code Set: " + objItem.CodeSet);
+      WScript.Echo("Current Language: " + objItem.CurrentLanguage);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Identification Code: " + objItem.IdentificationCode);
+      WScript.Echo("Installable Languages: " + objItem.InstallableLanguages);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Language Edition: " + objItem.LanguageEdition);
+      try { WScript.Echo("List Of Languages: " + (objItem.ListOfLanguages.toArray()).join(",")); }
+         catch(e) { WScript.Echo("List Of Languages: null"); }
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Other Target OS: " + objItem.OtherTargetOS);
+      WScript.Echo("Primary BIOS: " + objItem.PrimaryBIOS);
+      WScript.Echo("Release Date: " + objItem.ReleaseDate);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("SMBIOS BIOS Version: " + objItem.SMBIOSBIOSVersion);
+      WScript.Echo("SMBIOS Major Version: " + objItem.SMBIOSMajorVersion);
+      WScript.Echo("SMBIOS Minor Version: " + objItem.SMBIOSMinorVersion);
+      WScript.Echo("SMBIOS Present: " + objItem.SMBIOSPresent);
+      WScript.Echo("Software Element ID: " + objItem.SoftwareElementID);
+      WScript.Echo("Software Element State: " + objItem.SoftwareElementState);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Target Operating System: " + objItem.TargetOperatingSystem);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

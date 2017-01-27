@@ -1,0 +1,53 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about the Terminal Service service.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TerminalService", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Accept Pause: " + objItem.AcceptPause);
+      WScript.Echo("Accept Stop: " + objItem.AcceptStop);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("CheckPoint: " + objItem.CheckPoint);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Desktop Interact: " + objItem.DesktopInteract);
+      WScript.Echo("Disconnected Sessions: " + objItem.DisconnectedSessions);
+      WScript.Echo("Display Name: " + objItem.DisplayName);
+      WScript.Echo("Error Control: " + objItem.ErrorControl);
+      WScript.Echo("Estimated Session Capacity: " + objItem.EstimatedSessionCapacity);
+      WScript.Echo("Exit Code: " + objItem.ExitCode);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Path Name: " + objItem.PathName);
+      WScript.Echo("Process Id: " + objItem.ProcessId);
+      WScript.Echo("Raw Session Capacity: " + objItem.RawSessionCapacity);
+      WScript.Echo("Resource Constraint: " + objItem.ResourceConstraint);
+      WScript.Echo("Service Specific Exit Code: " + objItem.ServiceSpecificExitCode);
+      WScript.Echo("ServiceT ype: " + objItem.ServiceType);
+      WScript.Echo("Started: " + objItem.Started);
+      WScript.Echo("Start Mode: " + objItem.StartMode);
+      WScript.Echo("Start Name: " + objItem.StartName);
+      WScript.Echo("State: " + objItem.State);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Tag Id: " + objItem.TagId);
+      WScript.Echo("Total Sessions: " + objItem.TotalSessions);
+      WScript.Echo("Wait Hint: " + objItem.WaitHint);
+      WScript.Echo();
+   }

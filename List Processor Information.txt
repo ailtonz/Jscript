@@ -1,0 +1,69 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Returns information about the processors installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Processor", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("AddressWidth: " + objItem.AddressWidth);
+      WScript.Echo("Architecture: " + objItem.Architecture);
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Config Manager Error Code: " + objItem.ConfigManagerErrorCode);
+      WScript.Echo("Config Manager User Config: " + objItem.ConfigManagerUserConfig);
+      WScript.Echo("Cpu Status: " + objItem.CpuStatus);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Current Clock Speed: " + objItem.CurrentClockSpeed);
+      WScript.Echo("Current Voltage: " + objItem.CurrentVoltage);
+      WScript.Echo("Data Width: " + objItem.DataWidth);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Error Cleared: " + objItem.ErrorCleared);
+      WScript.Echo("Error Description: " + objItem.ErrorDescription);
+      WScript.Echo("Ext Clock: " + objItem.ExtClock);
+      WScript.Echo("Family: " + objItem.Family);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("L2 Cache Size: " + objItem.L2CacheSize);
+      WScript.Echo("L2 Cache Speed: " + objItem.L2CacheSpeed);
+      WScript.Echo("Last Error Code: " + objItem.LastErrorCode);
+      WScript.Echo("Level: " + objItem.Level);
+      WScript.Echo("Load Percentage: " + objItem.LoadPercentage);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Max Clock Speed: " + objItem.MaxClockSpeed);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Other Family Description: " + objItem.OtherFamilyDescription);
+      WScript.Echo("PNP Device ID: " + objItem.PNPDeviceID);
+      try { WScript.Echo("Power Management Capabilities: " + 
+         (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Processor Id: " + objItem.ProcessorId);
+      WScript.Echo("Processor Type: " + objItem.ProcessorType);
+      WScript.Echo("Revision: " + objItem.Revision);
+      WScript.Echo("Role: " + objItem.Role);
+      WScript.Echo("Socket Designation: " + objItem.SocketDesignation);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Status Info: " + objItem.StatusInfo);
+      WScript.Echo("Stepping: " + objItem.Stepping);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Unique Id: " + objItem.UniqueId);
+      WScript.Echo("Upgrade Method: " + objItem.UpgradeMethod);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Voltage Caps: " + objItem.VoltageCaps);
+      WScript.Echo();
+   }

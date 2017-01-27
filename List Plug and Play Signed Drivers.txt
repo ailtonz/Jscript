@@ -1,0 +1,51 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Peripherals and Devices
+### Category3 : 
+### Description : Returns information about the signed plug and play drivers installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_PnPSignedDriver", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Class Guid: " + objItem.ClassGuid);
+      WScript.Echo("Compat ID: " + objItem.CompatID);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device Class: " + objItem.DeviceClass);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Device Name: " + objItem.DeviceName);
+      WScript.Echo("Dev Loader: " + objItem.DevLoader);
+      WScript.Echo("Driver Date: " + objItem.DriverDate);
+      WScript.Echo("Driver Name: " + objItem.DriverName);
+      WScript.Echo("Driver Provider Name: " + objItem.DriverProviderName);
+      WScript.Echo("Driver Version: " + objItem.DriverVersion);
+      WScript.Echo("Friendly Name: " + objItem.FriendlyName);
+      WScript.Echo("HardWare ID: " + objItem.HardWareID);
+      WScript.Echo("Inf Name: " + objItem.InfName);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Is Signed: " + objItem.IsSigned);
+      WScript.Echo("Location: " + objItem.Location);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("PDO: " + objItem.PDO);
+      WScript.Echo("Signer: " + objItem.Signer);
+      WScript.Echo("Started: " + objItem.Started);
+      WScript.Echo("Start Mode: " + objItem.StartMode);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo();
+   }

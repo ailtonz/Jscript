@@ -1,0 +1,38 @@
+###
+###
+###
+### Category1 : Desktop Management
+### Category2 : Startup and Shutdown
+### Category3 : 
+### Description : Returns a list of settings that indicate the action to be taken by a computer should a stop event (blue screen) occur.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_OSRecoveryConfiguration", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Auto Reboot: " + objItem.AutoReboot);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Debug File Path: " + objItem.DebugFilePath);
+      WScript.Echo("Debug Info Type: " + objItem.DebugInfoType);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Expanded Debug File Path: " + objItem.ExpandedDebugFilePath);
+      WScript.Echo("Expanded MiniDump Directory: " + objItem.ExpandedMiniDumpDirectory);
+      WScript.Echo("Kernel Dump Only: " + objItem.KernelDumpOnly);
+      WScript.Echo("MiniDump Directory: " + objItem.MiniDumpDirectory);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Overwrite Existing Debug File: " + objItem.OverwriteExistingDebugFile);
+      WScript.Echo("Send Admin Alert: " + objItem.SendAdminAlert);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Write Debug Info: " + objItem.WriteDebugInfo);
+      WScript.Echo("Write To System Log: " + objItem.WriteToSystemLog);
+      WScript.Echo();
+   }

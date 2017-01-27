@@ -1,0 +1,34 @@
+###
+###
+###
+### Category1 : Service Packs and Hot Fixes
+### Category2 : 
+### Category3 : 
+### Description : Returns a list of all the hot fixes installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_QuickFixEngineering", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Fix Comments: " + objItem.FixComments);
+      WScript.Echo("Hot Fix ID: " + objItem.HotFixID);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Installed By: " + objItem.InstalledBy);
+      WScript.Echo("Installed On: " + objItem.InstalledOn);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Service Pack In Effect: " + objItem.ServicePackInEffect);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

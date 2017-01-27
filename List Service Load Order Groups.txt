@@ -1,0 +1,30 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Services
+### Category3 : 
+### Description : Returns a list of all the service load order groups found on a computer, and well as their load order.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_LoadOrderGroup", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Driver Enabled: " + objItem.DriverEnabled);
+      WScript.Echo("Group Order: " + objItem.GroupOrder);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

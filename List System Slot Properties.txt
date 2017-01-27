@@ -1,0 +1,59 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Ports and Slots
+### Category3 : 
+### Description : Returns information about the system slots installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_SystemSlot", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Connector Pinout: " + objItem.ConnectorPinout);
+      try { WScript.Echo("Connector Type: " + (objItem.ConnectorType.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Connector Type: null"); }
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Current Usage: " + objItem.CurrentUsage);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Height Allowed: " + objItem.HeightAllowed);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Length Allowed: " + objItem.LengthAllowed);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Max Data Width: " + objItem.MaxDataWidth);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number: " + objItem.Number);
+      WScript.Echo("Other Identifying Info: " + objItem.OtherIdentifyingInfo);
+      WScript.Echo("Part Number: " + objItem.PartNumber);
+      WScript.Echo("PME Signal: " + objItem.PMESignal);
+      WScript.Echo("Powered On: " + objItem.PoweredOn);
+      WScript.Echo("Purpose Description: " + objItem.PurposeDescription);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("Shared: " + objItem.Shared);
+      WScript.Echo("SKU: " + objItem.SKU);
+      WScript.Echo("Slot Designation: " + objItem.SlotDesignation);
+      WScript.Echo("Special Purpose: " + objItem.SpecialPurpose);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Supports Hot Plug: " + objItem.SupportsHotPlug);
+      WScript.Echo("Tag: " + objItem.Tag);
+      WScript.Echo("Thermal Rating: " + objItem.ThermalRating);
+      try { WScript.Echo("Vcc Mixed Voltage Support: " + 
+         (objItem.VccMixedVoltageSupport.toArray()).join(",")); }
+         catch(e) { WScript.Echo("VccMixedVoltageSupport: null"); }
+      WScript.Echo("Version: " + objItem.Version);
+      try { WScript.Echo("Vpp Mixed Voltage Support: " + 
+         (objItem.VppMixedVoltageSupport.toArray()).join(",")); }
+         catch(e) { WScript.Echo("VppMixedVoltageSupport: null"); }
+      WScript.Echo();
+   }

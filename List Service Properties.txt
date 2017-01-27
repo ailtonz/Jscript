@@ -1,0 +1,48 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Services
+### Category3 : 
+### Description : Retrieves a complete list of services and their associated properties. Information is saved to a text file: C:\Scripts\Service_List.cs.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Service", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Accept Pause: " + objItem.AcceptPause);
+      WScript.Echo("Accept Stop: " + objItem.AcceptStop);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("CheckPoint: " + objItem.CheckPoint);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Desktop Interact: " + objItem.DesktopInteract);
+      WScript.Echo("Display Name: " + objItem.DisplayName);
+      WScript.Echo("Error Control: " + objItem.ErrorControl);
+      WScript.Echo("Exit Code: " + objItem.ExitCode);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Path Name: " + objItem.PathName);
+      WScript.Echo("Process Id: " + objItem.ProcessId);
+      WScript.Echo("Service Specific Exit Code: " + objItem.ServiceSpecificExitCode);
+      WScript.Echo("Service Type: " + objItem.ServiceType);
+      WScript.Echo("Started: " + objItem.Started);
+      WScript.Echo("Start Mode: " + objItem.StartMode);
+      WScript.Echo("Start Name: " + objItem.StartName);
+      WScript.Echo("State: " + objItem.State);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Tag Id: " + objItem.TagId);
+      WScript.Echo("Wait Hint: " + objItem.WaitHint);
+      WScript.Echo();
+   }

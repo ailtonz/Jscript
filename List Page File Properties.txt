@@ -1,0 +1,59 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Page Files
+### Category3 : 
+### Description : Lists the properties of all the page files on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_PageFile", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Access Mask: " + objItem.AccessMask);
+      WScript.Echo("Archive: " + objItem.Archive);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Compressed: " + objItem.Compressed);
+      WScript.Echo("Compression Method: " + objItem.CompressionMethod);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Creation Date: " + objItem.CreationDate);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Drive: " + objItem.Drive);
+      WScript.Echo("Eight Dot Three File Name: " + objItem.EightDotThreeFileName);
+      WScript.Echo("Encrypted: " + objItem.Encrypted);
+      WScript.Echo("Encryption Method: " + objItem.EncryptionMethod);
+      WScript.Echo("Extension: " + objItem.Extension);
+      WScript.Echo("File Name: " + objItem.FileName);
+      WScript.Echo("File Size: " + objItem.FileSize);
+      WScript.Echo("File Type: " + objItem.FileType);
+      WScript.Echo("Free Space: " + objItem.FreeSpace);
+      WScript.Echo("FS Creation Class Name: " + objItem.FSCreationClassName);
+      WScript.Echo("FS Name: " + objItem.FSName);
+      WScript.Echo("Hidden: " + objItem.Hidden);
+      WScript.Echo("Initial Size: " + objItem.InitialSize);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("In Use Count: " + objItem.InUseCount);
+      WScript.Echo("Last Accessed: " + objItem.LastAccessed);
+      WScript.Echo("Last Modified: " + objItem.LastModified);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Maximum Size: " + objItem.MaximumSize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Path: " + objItem.Path);
+      WScript.Echo("Readable: " + objItem.Readable);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("System: " + objItem.System);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Writeable: " + objItem.Writeable);
+      WScript.Echo();
+   }

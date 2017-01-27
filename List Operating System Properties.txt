@@ -1,0 +1,88 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Version Information
+### Category3 : 
+### Description : Retrieves information about the operating system installed on a computer, including language, encryption level, and build number.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_OperatingSystem", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Boot Device: " + objItem.BootDevice);
+      WScript.Echo("Build Number: " + objItem.BuildNumber);
+      WScript.Echo("Build Type: " + objItem.BuildType);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Code Set: " + objItem.CodeSet);
+      WScript.Echo("Country Code: " + objItem.CountryCode);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CSD Version: " + objItem.CSDVersion);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Current Time Zone: " + objItem.CurrentTimeZone);
+      WScript.Echo("Data Execution Prevention 32-Bit Applications: " + 
+          objItem.DataExecutionPrevention_32BitApplications);
+      WScript.Echo("Data Execution Prevention Available: " + 
+          objItem.DataExecutionPrevention_Available);
+      WScript.Echo("Data Execution Prevention Drivers: " + 
+          objItem.DataExecutionPrevention_Drivers);
+      WScript.Echo("Data Execution Prevention Support Policy: " + 
+          objItem.DataExecutionPrevention_SupportPolicy);
+      WScript.Echo("Debug: " + objItem.Debug);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Distributed: " + objItem.Distributed);
+      WScript.Echo("Encryption Level: " + objItem.EncryptionLevel);
+      WScript.Echo("Foreground Application Boost: " + objItem.ForegroundApplicationBoost);
+      WScript.Echo("Free Physical Memory: " + objItem.FreePhysicalMemory);
+      WScript.Echo("Free Space In Paging Files: " + objItem.FreeSpaceInPagingFiles);
+      WScript.Echo("Free Virtual Memory: " + objItem.FreeVirtualMemory);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Large System Cache: " + objItem.LargeSystemCache);
+      WScript.Echo("Last BootUp Time: " + objItem.LastBootUpTime);
+      WScript.Echo("Local Date Time: " + objItem.LocalDateTime);
+      WScript.Echo("Locale: " + objItem.Locale);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Max Number Of Processes: " + objItem.MaxNumberOfProcesses);
+      WScript.Echo("Max Process Memory Size: " + objItem.MaxProcessMemorySize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number Of Licensed Users: " + objItem.NumberOfLicensedUsers);
+      WScript.Echo("Number Of Processes: " + objItem.NumberOfProcesses);
+      WScript.Echo("Number Of Users: " + objItem.NumberOfUsers);
+      WScript.Echo("Organization: " + objItem.Organization);
+      WScript.Echo("OS Language: " + objItem.OSLanguage);
+      WScript.Echo("OS Product Suite: " + objItem.OSProductSuite);
+      WScript.Echo("OS Type: " + objItem.OSType);
+      WScript.Echo("Other Type Description: " + objItem.OtherTypeDescription);
+      WScript.Echo("Plus Product ID: " + objItem.PlusProductID);
+      WScript.Echo("Plus Version Number: " + objItem.PlusVersionNumber);
+      WScript.Echo("Primary: " + objItem.Primary);
+      WScript.Echo("Product Type: " + objItem.ProductType);
+      WScript.Echo("Quantum Length: " + objItem.QuantumLength);
+      WScript.Echo("Quantum Type: " + objItem.QuantumType);
+      WScript.Echo("Registered User: " + objItem.RegisteredUser);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("Service Pack Major Version: " + objItem.ServicePackMajorVersion);
+      WScript.Echo("Service Pack Minor Version: " + objItem.ServicePackMinorVersion);
+      WScript.Echo("Size Stored In Paging Files: " + objItem.SizeStoredInPagingFiles);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Suite Mask: " + objItem.SuiteMask);
+      WScript.Echo("System Device: " + objItem.SystemDevice);
+      WScript.Echo("System Directory: " + objItem.SystemDirectory);
+      WScript.Echo("System Drive: " + objItem.SystemDrive);
+      WScript.Echo("Total Swap Space Size: " + objItem.TotalSwapSpaceSize);
+      WScript.Echo("Total Virtual Memory Size: " + objItem.TotalVirtualMemorySize);
+      WScript.Echo("Total Visible Memory Size: " + objItem.TotalVisibleMemorySize);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Windows Directory: " + objItem.WindowsDirectory);
+      WScript.Echo();
+   }

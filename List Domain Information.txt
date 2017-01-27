@@ -1,0 +1,52 @@
+###
+###
+###
+### Category1 : Active Directory
+### Category2 : Domains
+### Category3 : 
+### Description : Returns information about the current Active Directory domain.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NTDomain", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Client Site Name: " + objItem.ClientSiteName);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Dc Site Name: " + objItem.DcSiteName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Dns Forest Name: " + objItem.DnsForestName);
+      WScript.Echo("Domain Controller Address: " + objItem.DomainControllerAddress);
+      WScript.Echo("Domain Controller Address Type: " + objItem.DomainControllerAddressType);
+      WScript.Echo("Domain Controller Name: " + objItem.DomainControllerName);
+      WScript.Echo("Domain Guid: " + objItem.DomainGuid);
+      WScript.Echo("Domain Name: " + objItem.DomainName);
+      WScript.Echo("DS Directory Service Flag: " + objItem.DSDirectoryServiceFlag);
+      WScript.Echo("DS Dns Controller Flag: " + objItem.DSDnsControllerFlag);
+      WScript.Echo("DS Dns Domain Flag: " + objItem.DSDnsDomainFlag);
+      WScript.Echo("DS Dns Forest Flag: " + objItem.DSDnsForestFlag);
+      WScript.Echo("DS Global Catalog Flag: " + objItem.DSGlobalCatalogFlag);
+      WScript.Echo("DS Kerberos Distribution Center Flag: " + 
+          objItem.DSKerberosDistributionCenterFlag);
+      WScript.Echo("DS Primary Domain Controller Flag: " + objItem.DSPrimaryDomainControllerFlag);
+      WScript.Echo("DS Time Service Flag: " + objItem.DSTimeServiceFlag);
+      WScript.Echo("DS Writable Flag: " + objItem.DSWritableFlag);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Name Format: " + objItem.NameFormat);
+      WScript.Echo("Primary Owner Contact: " + objItem.PrimaryOwnerContact);
+      WScript.Echo("Primary Owner Name: " + objItem.PrimaryOwnerName);
+      try { WScript.Echo("Roles: " + (objItem.Roles.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Roles: null"); }
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

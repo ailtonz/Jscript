@@ -1,0 +1,84 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Returns basic hardware and configuration information about a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_ComputerSystem", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Admin Password Status: " + objItem.AdminPasswordStatus);
+      WScript.Echo("Automatic Reset Boot Option: " + objItem.AutomaticResetBootOption);
+      WScript.Echo("Automatic Reset Capability: " + objItem.AutomaticResetCapability);
+      WScript.Echo("Boot Option On Limit: " + objItem.BootOptionOnLimit);
+      WScript.Echo("Boot Option On WatchDog: " + objItem.BootOptionOnWatchDog);
+      WScript.Echo("Boot ROM Supported: " + objItem.BootROMSupported);
+      WScript.Echo("Bootup State: " + objItem.BootupState);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Chassis Bootup State: " + objItem.ChassisBootupState);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Current Time Zone: " + objItem.CurrentTimeZone);
+      WScript.Echo("Daylight In Effect: " + objItem.DaylightInEffect);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Domain: " + objItem.Domain);
+      WScript.Echo("Domain Role: " + objItem.DomainRole);
+      WScript.Echo("Enable Daylight Savings Time: " + objItem.EnableDaylightSavingsTime);
+      WScript.Echo("Front Panel Reset Status: " + objItem.FrontPanelResetStatus);
+      WScript.Echo("Infrared Supported: " + objItem.InfraredSupported);
+      try { WScript.Echo("Initial Load Info: " + (objItem.InitialLoadInfo.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Initial Load Info: null"); }
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Keyboard Password Status: " + objItem.KeyboardPasswordStatus);
+      WScript.Echo("Last Load Info: " + objItem.LastLoadInfo);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Name Format: " + objItem.NameFormat);
+      WScript.Echo("Network Server Mode Enabled: " + objItem.NetworkServerModeEnabled);
+      WScript.Echo("Number Of Processors: " + objItem.NumberOfProcessors);
+      try { WScript.Echo("OEM Logo Bitmap: " + (objItem.OEMLogoBitmap.toArray()).join(",")); }
+         catch(e) { WScript.Echo("OEM Logo Bitmap: null"); }
+      try { WScript.Echo("OEM String Array: " + (objItem.OEMStringArray.toArray()).join(",")); }
+         catch(e) { WScript.Echo("OEM String Array: null"); }
+      WScript.Echo("Part Of Domain: " + objItem.PartOfDomain);
+      WScript.Echo("Pause After Reset: " + objItem.PauseAfterReset);
+      try { WScript.Echo("Power Management Capabilities: " + (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Power On Password Status: " + objItem.PowerOnPasswordStatus);
+      WScript.Echo("Power State: " + objItem.PowerState);
+      WScript.Echo("Power Supply State: " + objItem.PowerSupplyState);
+      WScript.Echo("Primary Owner Contact: " + objItem.PrimaryOwnerContact);
+      WScript.Echo("Primary Owner Name: " + objItem.PrimaryOwnerName);
+      WScript.Echo("Reset Capability: " + objItem.ResetCapability);
+      WScript.Echo("Reset Count: " + objItem.ResetCount);
+      WScript.Echo("Reset Limit: " + objItem.ResetLimit);
+      try { WScript.Echo("Roles: " + (objItem.Roles.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Roles: null"); }
+      WScript.Echo("Status: " + objItem.Status);
+      try { WScript.Echo("Support Contact Description: " + (objItem.SupportContactDescription.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Support Contact Description: null"); }
+      WScript.Echo("System Startup Delay: " + objItem.SystemStartupDelay);
+      try { WScript.Echo("System Startup Options: " + (objItem.SystemStartupOptions.toArray()).join(",")); }
+         catch(e) { WScript.Echo("System Startup Options: null"); }
+      WScript.Echo("System Startup Setting: " + objItem.SystemStartupSetting);
+      WScript.Echo("System Type: " + objItem.SystemType);
+      WScript.Echo("Thermal State: " + objItem.ThermalState);
+      WScript.Echo("Total Physical Memory: " + objItem.TotalPhysicalMemory);
+      WScript.Echo("User Name: " + objItem.UserName);
+      WScript.Echo("WakeUp Type: " + objItem.WakeUpType);
+      WScript.Echo("Workgroup: " + objItem.Workgroup);
+      WScript.Echo();
+   }

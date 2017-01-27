@@ -1,0 +1,31 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about the Terminal Service client environment settings configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSEnvironmentSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Client WallPaper: " + objItem.ClientWallPaper);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Initial Program Path: " + objItem.InitialProgramPath);
+      WScript.Echo("Initial Program Policy: " + objItem.InitialProgramPolicy);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Start in: " + objItem.Startin);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo();
+   }

@@ -1,0 +1,43 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Returns information about devices built into the motherboard installed in a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_OnBoardDevice", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device Type: " + objItem.DeviceType);
+      WScript.Echo("Enabled: " + objItem.Enabled);
+      WScript.Echo("Hot Swappable: " + objItem.HotSwappable);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Other Identifying Info: " + objItem.OtherIdentifyingInfo);
+      WScript.Echo("Part Number: " + objItem.PartNumber);
+      WScript.Echo("Powered On: " + objItem.PoweredOn);
+      WScript.Echo("Removable: " + objItem.Removable);
+      WScript.Echo("Replaceable: " + objItem.Replaceable);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("SKU: " + objItem.SKU);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Tag: " + objItem.Tag);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

@@ -1,0 +1,31 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about the Terminal Service logon policies configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSLogonSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Client Logon Info Policy: " + objItem.ClientLogonInfoPolicy);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Domain: " + objItem.Domain);
+      WScript.Echo("Prompt For Password: " + objItem.PromptForPassword);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo("User Name: " + objItem.UserName);
+      WScript.Echo();
+   }

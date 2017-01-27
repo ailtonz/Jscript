@@ -1,0 +1,65 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Memory
+### Category3 : 
+### Description : Returns starting and ending addresses for all memory arrays installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_MemoryArray", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Access: " + objItem.Access);
+      try { WScript.Echo("Additional Error Data: " + (objItem.AdditionalErrorData.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Additional Error Data: null"); }
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Block Size: " + objItem.BlockSize);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Config Manager Error Code: " + objItem.ConfigManagerErrorCode);
+      WScript.Echo("Config Manager User Config: " + objItem.ConfigManagerUserConfig);
+      WScript.Echo("Correctable Error: " + objItem.CorrectableError);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Ending Address: " + objItem.EndingAddress);
+      WScript.Echo("Error Access: " + objItem.ErrorAccess);
+      WScript.Echo("Error Address: " + objItem.ErrorAddress);
+      WScript.Echo("Error Cleared: " + objItem.ErrorCleared);
+      try { WScript.Echo("Error Data: " + (objItem.ErrorData.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Error Data: null"); }
+      WScript.Echo("Error Data Order: " + objItem.ErrorDataOrder);
+      WScript.Echo("Error Description: " + objItem.ErrorDescription);
+      WScript.Echo("Error Granularity: " + objItem.ErrorGranularity);
+      WScript.Echo("Error Info: " + objItem.ErrorInfo);
+      WScript.Echo("Error Methodology: " + objItem.ErrorMethodology);
+      WScript.Echo("Error Resolution: " + objItem.ErrorResolution);
+      WScript.Echo("Error Time: " + objItem.ErrorTime);
+      WScript.Echo("Error Transfer Size: " + objItem.ErrorTransferSize);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Last Error Code: " + objItem.LastErrorCode);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number Of Blocks: " + objItem.NumberOfBlocks);
+      WScript.Echo("Other Error Description: " + objItem.OtherErrorDescription);
+      WScript.Echo("PNP Device ID: " + objItem.PNPDeviceID);
+      try { WScript.Echo("Power Management Capabilities: " + (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Purpose: " + objItem.Purpose);
+      WScript.Echo("Starting Address: " + objItem.StartingAddress);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Status Info: " + objItem.StatusInfo);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Level Address: " + objItem.SystemLevelAddress);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo();
+   }

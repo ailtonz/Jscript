@@ -1,0 +1,94 @@
+###
+###
+###
+### Category1 : Networking
+### Category2 : Client-Side Management
+### Category3 : Retrieving Network Configuration Information
+### Description : Lists configuration information for all the network adapters installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Arp Always Source Route: " + objItem.ArpAlwaysSourceRoute);
+      WScript.Echo("Arp Use EtherSNAP: " + objItem.ArpUseEtherSNAP);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Database Path: " + objItem.DatabasePath);
+      WScript.Echo("Dead GW Detect Enabled: " + objItem.DeadGWDetectEnabled);
+      try { WScript.Echo("Default IP Gateway: " + (objItem.DefaultIPGateway.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Default IP Gateway: null"); }
+      WScript.Echo("Default TOS: " + objItem.DefaultTOS);
+      WScript.Echo("Default TTL: " + objItem.DefaultTTL);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("DHCP Enabled: " + objItem.DHCPEnabled);
+      WScript.Echo("DHCP Lease Expires: " + objItem.DHCPLeaseExpires);
+      WScript.Echo("DHCP Lease Obtained: " + objItem.DHCPLeaseObtained);
+      WScript.Echo("DHCP Server: " + objItem.DHCPServer);
+      WScript.Echo("DNS Domain: " + objItem.DNSDomain);
+      try { WScript.Echo("DNS Domain Suffix Search Order: " + (objItem.DNSDomainSuffixSearchOrder.toArray()).join(",")); }
+         catch(e) { WScript.Echo("DNS Domain Suffix Search Order: null"); }
+      WScript.Echo("DNS Enabled For WINS Resolution: " + objItem.DNSEnabledForWINSResolution);
+      WScript.Echo("DNS Host Name: " + objItem.DNSHostName);
+      try { WScript.Echo("DNS Server Search Order: " + (objItem.DNSServerSearchOrder.toArray()).join(",")); }
+         catch(e) { WScript.Echo("DNS Server Search Order: null"); }
+      WScript.Echo("Domain DNS Registration Enabled: " + objItem.DomainDNSRegistrationEnabled);
+      WScript.Echo("Forward Buffer Memory: " + objItem.ForwardBufferMemory);
+      WScript.Echo("Full DNS Registration Enabled: " + objItem.FullDNSRegistrationEnabled);
+      try { WScript.Echo("Gateway Cost Metric: " + (objItem.GatewayCostMetric.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Gateway Cost Metric: null"); }
+      WScript.Echo("IGMP Level: " + objItem.IGMPLevel);
+      WScript.Echo("Index: " + objItem.Index);
+      try { WScript.Echo("IP Address: " + (objItem.IPAddress.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IP Address: null"); }
+      WScript.Echo("IP Connection Metric: " + objItem.IPConnectionMetric);
+      WScript.Echo("IP Enabled: " + objItem.IPEnabled);
+      WScript.Echo("IP Filter Security Enabled: " + objItem.IPFilterSecurityEnabled);
+      WScript.Echo("IP Port Security Enabled: " + objItem.IPPortSecurityEnabled);
+      try { WScript.Echo("IPSec Permit IP Protocols: " + (objItem.IPSecPermitIPProtocols.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IPSec Permit IP Protocols: null"); }
+      try { WScript.Echo("IPSec Permit TCP Ports: " + (objItem.IPSecPermitTCPPorts.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IPSec Permit TCP Ports: null"); }
+      try { WScript.Echo("IPSec Permit UDP Ports: " + (objItem.IPSecPermitUDPPorts.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IPSec Permit UDP Ports: null"); }
+      try { WScript.Echo("IP Subnet: " + (objItem.IPSubnet.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IP Subnet: null"); }
+      WScript.Echo("IP Use Zero Broadcast: " + objItem.IPUseZeroBroadcast);
+      WScript.Echo("IPX Address: " + objItem.IPXAddress);
+      WScript.Echo("IPX Enabled: " + objItem.IPXEnabled);
+      try { WScript.Echo("IPX Frame Type: " + (objItem.IPXFrameType.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IPX Frame Type: null"); }
+      WScript.Echo("IPX Media Type: " + objItem.IPXMediaType);
+      try { WScript.Echo("IPX Network Number: " + (objItem.IPXNetworkNumber.toArray()).join(",")); }
+         catch(e) { WScript.Echo("IPX Network Number: null"); }
+      WScript.Echo("IPX Virtual Net Number: " + objItem.IPXVirtualNetNumber);
+      WScript.Echo("Keep Alive Interval: " + objItem.KeepAliveInterval);
+      WScript.Echo("Keep Alive Time: " + objItem.KeepAliveTime);
+      WScript.Echo("MAC Address: " + objItem.MACAddress);
+      WScript.Echo("MTU: " + objItem.MTU);
+      WScript.Echo("Num Forward Packets: " + objItem.NumForwardPackets);
+      WScript.Echo("PMTUBH Detect Enabled: " + objItem.PMTUBHDetectEnabled);
+      WScript.Echo("PMTU Discovery Enabled: " + objItem.PMTUDiscoveryEnabled);
+      WScript.Echo("Service Name: " + objItem.ServiceName);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Tcpip Netbios Options: " + objItem.TcpipNetbiosOptions);
+      WScript.Echo("Tcp Max Connect Retransmissions: " + objItem.TcpMaxConnectRetransmissions);
+      WScript.Echo("Tcp Max Data Retransmissions: " + objItem.TcpMaxDataRetransmissions);
+      WScript.Echo("Tcp Num Connections: " + objItem.TcpNumConnections);
+      WScript.Echo("Tcp Use RFC1122 Urgent Pointer: " + objItem.TcpUseRFC1122UrgentPointer);
+      WScript.Echo("Tcp Window Size: " + objItem.TcpWindowSize);
+      WScript.Echo("WINS Enable LMHosts Lookup: " + objItem.WINSEnableLMHostsLookup);
+      WScript.Echo("WINS Host Lookup File: " + objItem.WINSHostLookupFile);
+      WScript.Echo("WINS Primary Server: " + objItem.WINSPrimaryServer);
+      WScript.Echo("WINS Scope ID: " + objItem.WINSScopeID);
+      WScript.Echo("WINS Secondary Server: " + objItem.WINSSecondaryServer);
+      WScript.Echo();
+   }

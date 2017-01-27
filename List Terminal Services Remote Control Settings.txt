@@ -1,0 +1,29 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about Terminal Service remote control as configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSRemoteControlSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Level Of Control: " + objItem.LevelOfControl);
+      WScript.Echo("Remote Control Policy: " + objItem.RemoteControlPolicy);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo();
+   }

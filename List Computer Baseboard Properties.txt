@@ -1,0 +1,53 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Returns information about the computer baseboard.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_BaseBoard", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      try { WScript.Echo("Config Options: " + (objItem.ConfigOptions.toArray()).join(",")); }
+         catch(e) { WScript.Echo("ConfigOptions: null"); }
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Depth: " + objItem.Depth);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Height: " + objItem.Height);
+      WScript.Echo("Hosting Board: " + objItem.HostingBoard);
+      WScript.Echo("Hot Swappable: " + objItem.HotSwappable);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Other Identifying Info: " + objItem.OtherIdentifyingInfo);
+      WScript.Echo("Part Number: " + objItem.PartNumber);
+      WScript.Echo("Powered On: " + objItem.PoweredOn);
+      WScript.Echo("Product: " + objItem.Product);
+      WScript.Echo("Removable: " + objItem.Removable);
+      WScript.Echo("Replaceable: " + objItem.Replaceable);
+      WScript.Echo("Requirements Description: " + objItem.RequirementsDescription);
+      WScript.Echo("Requires DaughterBoard: " + objItem.RequiresDaughterBoard);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("SKU: " + objItem.SKU);
+      WScript.Echo("Slot Layout: " + objItem.SlotLayout);
+      WScript.Echo("Special Requirements: " + objItem.SpecialRequirements);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Tag: " + objItem.Tag);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Weight: " + objItem.Weight);
+      WScript.Echo("Width: " + objItem.Width);
+      WScript.Echo();
+   }

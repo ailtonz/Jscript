@@ -1,0 +1,45 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Processes
+### Category3 : Processes and Threads
+### Description : Returns a list of threads and thread states for each process running on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Thread", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CSName: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Elapsed Time: " + objItem.ElapsedTime);
+      WScript.Echo("Execution State: " + objItem.ExecutionState);
+      WScript.Echo("Handle: " + objItem.Handle);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Kernel Mode Time: " + objItem.KernelModeTime);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("OS Creation Class Name: " + objItem.OSCreationClassName);
+      WScript.Echo("OS Name: " + objItem.OSName);
+      WScript.Echo("Priority: " + objItem.Priority);
+      WScript.Echo("Priority Base: " + objItem.PriorityBase);
+      WScript.Echo("Process Creation Class Name: " + objItem.ProcessCreationClassName);
+      WScript.Echo("Process Handle: " + objItem.ProcessHandle);
+      WScript.Echo("Start Address: " + objItem.StartAddress);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Thread State: " + objItem.ThreadState);
+      WScript.Echo("Thread Wait Reason: " + objItem.ThreadWaitReason);
+      WScript.Echo("User Mode Time: " + objItem.UserModeTime);
+      WScript.Echo();
+   }

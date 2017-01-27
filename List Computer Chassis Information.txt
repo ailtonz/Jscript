@@ -1,0 +1,67 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Basic Hardware and Firmware
+### Category3 : 
+### Description : Retrieves an integer value indicating the chassis type for a computer (mini-tower, laptop, etc.). The script does not include a description of each value that can be returned.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_SystemEnclosure", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Audible Alarm: " + objItem.AudibleAlarm);
+      WScript.Echo("Breach Description: " + objItem.BreachDescription);
+      WScript.Echo("Cable Management Strategy: " + objItem.CableManagementStrategy);
+      WScript.Echo("Caption: " + objItem.Caption);
+      try { WScript.Echo("Chassis Types: " + (objItem.ChassisTypes.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Chassis Types: null"); }
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Current Required Or Produced: " + objItem.CurrentRequiredOrProduced);
+      WScript.Echo("Depth: " + objItem.Depth);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Heat Generation: " + objItem.HeatGeneration);
+      WScript.Echo("Height: " + objItem.Height);
+      WScript.Echo("Hot Swappable: " + objItem.HotSwappable);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Lock Present: " + objItem.LockPresent);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number Of Power Cords: " + objItem.NumberOfPowerCords);
+      WScript.Echo("Other Identifying Info: " + objItem.OtherIdentifyingInfo);
+      WScript.Echo("Part Number: " + objItem.PartNumber);
+      WScript.Echo("Powered On: " + objItem.PoweredOn);
+      WScript.Echo("Removable: " + objItem.Removable);
+      WScript.Echo("Replaceable: " + objItem.Replaceable);
+      WScript.Echo("Security Breach: " + objItem.SecurityBreach);
+      WScript.Echo("Security Status: " + objItem.SecurityStatus);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      try { WScript.Echo("Service Descriptions: " + 
+         (objItem.ServiceDescriptions.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Service Descriptions: null"); }
+      try { WScript.Echo("Service Philosophy: " + 
+         (objItem.ServicePhilosophy.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Service Philosophy: null"); }
+      WScript.Echo("SKU: " + objItem.SKU);
+      WScript.Echo("SMBIOS Asset Tag: " + objItem.SMBIOSAssetTag);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Tag: " + objItem.Tag);
+      try { WScript.Echo("Type Descriptions: " + 
+         (objItem.TypeDescriptions.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Type Descriptions: null"); }
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Visible Alarm: " + objItem.VisibleAlarm);
+      WScript.Echo("Weight: " + objItem.Weight);
+      WScript.Echo("Width: " + objItem.Width);
+      WScript.Echo();
+   }

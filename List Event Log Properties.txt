@@ -1,0 +1,63 @@
+###
+###
+###
+### Category1 : Logs
+### Category2 : Event Logs
+### Category3 : 
+### Description : Retrieves a list of properties for all the event logs on a computer, except the Security event log.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NTEventlogFile", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Access Mask: " + objItem.AccessMask);
+      WScript.Echo("Archive: " + objItem.Archive);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Compressed: " + objItem.Compressed);
+      WScript.Echo("Compression Method: " + objItem.CompressionMethod);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Creation Date: " + objItem.CreationDate);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Drive: " + objItem.Drive);
+      WScript.Echo("Eight Dot Three File Name: " + objItem.EightDotThreeFileName);
+      WScript.Echo("Encrypted: " + objItem.Encrypted);
+      WScript.Echo("Encryption Method: " + objItem.EncryptionMethod);
+      WScript.Echo("Extension: " + objItem.Extension);
+      WScript.Echo("File Name: " + objItem.FileName);
+      WScript.Echo("File Size: " + objItem.FileSize);
+      WScript.Echo("File Type: " + objItem.FileType);
+      WScript.Echo("FS Creation Class Name: " + objItem.FSCreationClassName);
+      WScript.Echo("FS Name: " + objItem.FSName);
+      WScript.Echo("Hidden: " + objItem.Hidden);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("In Use Count: " + objItem.InUseCount);
+      WScript.Echo("Last Accessed: " + objItem.LastAccessed);
+      WScript.Echo("Last Modified: " + objItem.LastModified);
+      WScript.Echo("Logfile Name: " + objItem.LogfileName);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Max File Size: " + objItem.MaxFileSize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Number Of Records: " + objItem.NumberOfRecords);
+      WScript.Echo("Overwrite OutDated: " + objItem.OverwriteOutDated);
+      WScript.Echo("OverWrite Policy: " + objItem.OverWritePolicy);
+      WScript.Echo("Path: " + objItem.Path);
+      WScript.Echo("Readable: " + objItem.Readable);
+      try { WScript.Echo("Sources: " + (objItem.Sources.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Sources: null"); }
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("System: " + objItem.System);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo("Writeable: " + objItem.Writeable);
+      WScript.Echo();
+   }

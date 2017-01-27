@@ -1,0 +1,41 @@
+###
+###
+###
+### Category1 : Logs
+### Category2 : Event Logs
+### Category3 : 
+### Description : Retrieves events from the Application and System event logs.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NTLogEvent", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Category: " + objItem.Category);
+      WScript.Echo("Category String: " + objItem.CategoryString);
+      WScript.Echo("Computer Name: " + objItem.ComputerName);
+      try { WScript.Echo("Data: " + (objItem.Data.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Data: null"); }
+      WScript.Echo("Event Code: " + objItem.EventCode);
+      WScript.Echo("Event Identifier: " + objItem.EventIdentifier);
+      WScript.Echo("Event Type: " + objItem.EventType);
+      try { WScript.Echo("Insertion Strings: " + (objItem.InsertionStrings.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Insertion Strings: null"); }
+      WScript.Echo("Logfile: " + objItem.Logfile);
+      WScript.Echo("Message: " + objItem.Message);
+      WScript.Echo("Record Number: " + objItem.RecordNumber);
+      WScript.Echo("Source Name: " + objItem.SourceName);
+      WScript.Echo("Time Generated: " + objItem.TimeGenerated);
+      WScript.Echo("Time Written: " + objItem.TimeWritten);
+      WScript.Echo("Type: " + objItem.Type);
+      WScript.Echo("User: " + objItem.User);
+      WScript.Echo();
+   }

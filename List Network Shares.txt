@@ -1,0 +1,33 @@
+###
+###
+###
+### Category1 : Storage
+### Category2 : Shared Folders
+### Category3 : 
+### Description : Lists all the shared folders on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Share", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Access Mask: " + objItem.AccessMask);
+      WScript.Echo("Allow Maximum: " + objItem.AllowMaximum);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Maximum Allowed: " + objItem.MaximumAllowed);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Path: " + objItem.Path);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Type: " + objItem.Type);
+      WScript.Echo();
+   }

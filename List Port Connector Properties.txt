@@ -1,0 +1,44 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Ports and Slots
+### Category3 : 
+### Description : Returns information about port connectors installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_PortConnector", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Connector Pinout: " + objItem.ConnectorPinout);
+      try { WScript.Echo("ConnectorType: " + (objItem.ConnectorType.toArray()).join(",")); }
+         catch(e) { WScript.Echo("ConnectorType: null"); }
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("External Reference Designator: " + objItem.ExternalReferenceDesignator);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Internal Reference Designator: " + objItem.InternalReferenceDesignator);
+      WScript.Echo("Manufacturer: " + objItem.Manufacturer);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Other Identifying Info: " + objItem.OtherIdentifyingInfo);
+      WScript.Echo("Part Number: " + objItem.PartNumber);
+      WScript.Echo("Port Type: " + objItem.PortType);
+      WScript.Echo("Powered On: " + objItem.PoweredOn);
+      WScript.Echo("Serial Number: " + objItem.SerialNumber);
+      WScript.Echo("SKU: " + objItem.SKU);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Tag: " + objItem.Tag);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

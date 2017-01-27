@@ -1,0 +1,41 @@
+###
+###
+###
+### Category1 : Networking
+### Category2 : Client-Side Management
+### Category3 : Retrieving Network Configuration Information
+### Description : Returns information about the IP route tables configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_IP4RouteTable", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Age: " + objItem.Age);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Destination: " + objItem.Destination);
+      WScript.Echo("Information: " + objItem.Information);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Interface Index: " + objItem.InterfaceIndex);
+      WScript.Echo("Mask: " + objItem.Mask);
+      WScript.Echo("Metric 1: " + objItem.Metric1);
+      WScript.Echo("Metric 2: " + objItem.Metric2);
+      WScript.Echo("Metric 3: " + objItem.Metric3);
+      WScript.Echo("Metric 4: " + objItem.Metric4);
+      WScript.Echo("Metric 5: " + objItem.Metric5);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Next Hop: " + objItem.NextHop);
+      WScript.Echo("Protocol: " + objItem.Protocol);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Type: " + objItem.Type);
+      WScript.Echo();
+   }

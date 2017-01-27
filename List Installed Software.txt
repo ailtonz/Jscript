@@ -1,0 +1,35 @@
+###
+###
+###
+### Category1 : Applications
+### Category2 : User
+### Category3 : 
+### Description : Returns a list of software that was installed on a computer using Windows Installer. This information is then written to a text file.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Product", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Identifying Number: " + objItem.IdentifyingNumber);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Install Date 2: " + objItem.InstallDate2);
+      WScript.Echo("Install Location: " + objItem.InstallLocation);
+      WScript.Echo("Install State: " + objItem.InstallState);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Package Cache: " + objItem.PackageCache);
+      WScript.Echo("SKU Number: " + objItem.SKUNumber);
+      WScript.Echo("Vendor: " + objItem.Vendor);
+      WScript.Echo("Version: " + objItem.Version);
+      WScript.Echo();
+   }

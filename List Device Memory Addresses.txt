@@ -1,0 +1,34 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Memory
+### Category3 : 
+### Description : Returns starting and ending memory addresses for all devices installed in a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_DeviceMemoryAddress", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Ending Address: " + objItem.EndingAddress);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Memory Type: " + objItem.MemoryType);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Starting Address: " + objItem.StartingAddress);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

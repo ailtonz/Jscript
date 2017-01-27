@@ -1,0 +1,33 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Returns information about all the Terminal Services accounts on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TSAccount", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Account Name: " + objItem.AccountName);
+      WScript.Echo("Audit Fail: " + objItem.AuditFail);
+      WScript.Echo("Audit Success: " + objItem.AuditSuccess);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Permissions Allowed: " + objItem.PermissionsAllowed);
+      WScript.Echo("Permissions Denied: " + objItem.PermissionsDenied);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("SID: " + objItem.SID);
+      WScript.Echo("Terminal Name: " + objItem.TerminalName);
+      WScript.Echo();
+   }

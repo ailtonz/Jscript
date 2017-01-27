@@ -1,0 +1,75 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Ports and Slots
+### Category3 : 
+### Description : Returns information about the serial ports installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_SerialPort", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Binary: " + objItem.Binary);
+      try { WScript.Echo("Capabilities: " + (objItem.Capabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Capabilities: null"); }
+      try { WScript.Echo("Capability Descriptions: " + 
+         (objItem.CapabilityDescriptions.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Capability Descriptions: null"); }
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Config Manager Error Code: " + objItem.ConfigManagerErrorCode);
+      WScript.Echo("Config Manager User Config: " + objItem.ConfigManagerUserConfig);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Error Cleared: " + objItem.ErrorCleared);
+      WScript.Echo("Error Description: " + objItem.ErrorDescription);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Last Error Code: " + objItem.LastErrorCode);
+      WScript.Echo("Max Baud Rate: " + objItem.MaxBaudRate);
+      WScript.Echo("Maximum Input Buffer Size: " + objItem.MaximumInputBufferSize);
+      WScript.Echo("Maximum Output Buffer Size: " + objItem.MaximumOutputBufferSize);
+      WScript.Echo("Max Number Controlled: " + objItem.MaxNumberControlled);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("OS AutoDiscovered: " + objItem.OSAutoDiscovered);
+      WScript.Echo("PNP DeviceI D: " + objItem.PNPDeviceID);
+      try { WScript.Echo("Power Management Capabilities: " + 
+         (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Protocol Supported: " + objItem.ProtocolSupported);
+      WScript.Echo("Provider Type: " + objItem.ProviderType);
+      WScript.Echo("Settable Baud Rate: " + objItem.SettableBaudRate);
+      WScript.Echo("Settable Data Bits: " + objItem.SettableDataBits);
+      WScript.Echo("Settable Flow Control: " + objItem.SettableFlowControl);
+      WScript.Echo("Settable Parity: " + objItem.SettableParity);
+      WScript.Echo("Settable Parity Check: " + objItem.SettableParityCheck);
+      WScript.Echo("Settable RLSD: " + objItem.SettableRLSD);
+      WScript.Echo("Settable Stop Bits: " + objItem.SettableStopBits);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Status Info: " + objItem.StatusInfo);
+      WScript.Echo("Supports 16-Bit Mode: " + objItem.Supports16BitMode);
+      WScript.Echo("Supports DTRDSR: " + objItem.SupportsDTRDSR);
+      WScript.Echo("Supports Elapsed Timeouts: " + objItem.SupportsElapsedTimeouts);
+      WScript.Echo("Supports Int Timeouts: " + objItem.SupportsIntTimeouts);
+      WScript.Echo("Supports Parity Check: " + objItem.SupportsParityCheck);
+      WScript.Echo("Supports RLSD: " + objItem.SupportsRLSD);
+      WScript.Echo("Supports RTSCTS: " + objItem.SupportsRTSCTS);
+      WScript.Echo("Supports Special Characters: " + objItem.SupportsSpecialCharacters);
+      WScript.Echo("Supports XOn XOff: " + objItem.SupportsXOnXOff);
+      WScript.Echo("Supports XOn XOffSet: " + objItem.SupportsXOnXOffSet);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Time Of Last Reset: " + objItem.TimeOfLastReset);
+      WScript.Echo();
+   }

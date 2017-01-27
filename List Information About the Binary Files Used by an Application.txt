@@ -1,0 +1,29 @@
+###
+###
+###
+### Category1 : Applications
+### Category2 : User
+### Category3 : 
+### Description : Returns the name and product code of binary information (such as bitmaps, icons, executable files, and so on) used by a Windows Installer application.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Binary", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Data: " + objItem.Data);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Product Code: " + objItem.ProductCode);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo();
+   }

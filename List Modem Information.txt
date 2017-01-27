@@ -1,0 +1,111 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Peripherals and Devices
+### Category3 : 
+### Description : Retrieves information about all the modems installed in a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_POTSModem", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Answer Mode: " + objItem.AnswerMode);
+      WScript.Echo("Attached To: " + objItem.AttachedTo);
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Blind Off: " + objItem.BlindOff);
+      WScript.Echo("Blind On: " + objItem.BlindOn);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Compatibility Flags: " + objItem.CompatibilityFlags);
+      WScript.Echo("Compression Info: " + objItem.CompressionInfo);
+      WScript.Echo("Compression Off: " + objItem.CompressionOff);
+      WScript.Echo("Compression On: " + objItem.CompressionOn);
+      WScript.Echo("Config Manager Error Code: " + objItem.ConfigManagerErrorCode);
+      WScript.Echo("Config Manager User Config: " + objItem.ConfigManagerUserConfig);
+      WScript.Echo("Configuration Dialog: " + objItem.ConfigurationDialog);
+      try { WScript.Echo("Countries Supported: " + 
+         (objItem.CountriesSupported.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Countries Supported: null"); }
+      WScript.Echo("Country Selected: " + objItem.CountrySelected);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      try { WScript.Echo("Current Passwords: " + 
+         (objItem.CurrentPasswords.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Current Passwords: null"); }
+      try { WScript.Echo("DCB: " + (objItem.DCB.toArray()).join(",")); }
+         catch(e) { WScript.Echo("DCB: null"); }
+      try { WScript.Echo("Default: " + (objItem.Default.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Default: null"); }
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Device Loader: " + objItem.DeviceLoader);
+      WScript.Echo("Device Type: " + objItem.DeviceType);
+      WScript.Echo("Dial Type: " + objItem.DialType);
+      WScript.Echo("Driver Date: " + objItem.DriverDate);
+      WScript.Echo("Error Cleared: " + objItem.ErrorCleared);
+      WScript.Echo("Error Control Forced: " + objItem.ErrorControlForced);
+      WScript.Echo("Error Control Info: " + objItem.ErrorControlInfo);
+      WScript.Echo("Error Control Off: " + objItem.ErrorControlOff);
+      WScript.Echo("Error Control On: " + objItem.ErrorControlOn);
+      WScript.Echo("Error Description: " + objItem.ErrorDescription);
+      WScript.Echo("Flow Control Hard: " + objItem.FlowControlHard);
+      WScript.Echo("Flow Control Off: " + objItem.FlowControlOff);
+      WScript.Echo("Flow Control Soft: " + objItem.FlowControlSoft);
+      WScript.Echo("Inactivity Scale: " + objItem.InactivityScale);
+      WScript.Echo("Inactivity Timeout: " + objItem.InactivityTimeout);
+      WScript.Echo("Index: " + objItem.Index);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Last Error Code: " + objItem.LastErrorCode);
+      WScript.Echo("Max Baud Rate To Phone: " + objItem.MaxBaudRateToPhone);
+      WScript.Echo("Max Baud Rate To Serial Port: " + objItem.MaxBaudRateToSerialPort);
+      WScript.Echo("Max Number Of Passwords: " + objItem.MaxNumberOfPasswords);
+      WScript.Echo("Model: " + objItem.Model);
+      WScript.Echo("Modem Inf Path: " + objItem.ModemInfPath);
+      WScript.Echo("Modem Inf Section: " + objItem.ModemInfSection);
+      WScript.Echo("Modulation Bell: " + objItem.ModulationBell);
+      WScript.Echo("Modulation CCITT: " + objItem.ModulationCCITT);
+      WScript.Echo("Modulation Scheme: " + objItem.ModulationScheme);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("PNP Device ID: " + objItem.PNPDeviceID);
+      WScript.Echo("Port SubClass: " + objItem.PortSubClass);
+      try { WScript.Echo("Power Management Capabilities: " + 
+         (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Prefix: " + objItem.Prefix);
+      try { WScript.Echo("Properties: " + (objItem.Properties.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Properties: null"); }
+      WScript.Echo("Provider Name: " + objItem.ProviderName);
+      WScript.Echo("Pulse: " + objItem.Pulse);
+      WScript.Echo("Reset: " + objItem.Reset);
+      WScript.Echo("Responses Key Name: " + objItem.ResponsesKeyName);
+      WScript.Echo("Rings Before Answer: " + objItem.RingsBeforeAnswer);
+      WScript.Echo("Speaker Mode Dial: " + objItem.SpeakerModeDial);
+      WScript.Echo("Speaker Mode Off: " + objItem.SpeakerModeOff);
+      WScript.Echo("Speaker Mode On: " + objItem.SpeakerModeOn);
+      WScript.Echo("Speaker Mode Setup: " + objItem.SpeakerModeSetup);
+      WScript.Echo("Speaker Volume High: " + objItem.SpeakerVolumeHigh);
+      WScript.Echo("Speaker Volume Info: " + objItem.SpeakerVolumeInfo);
+      WScript.Echo("Speaker Volume Low: " + objItem.SpeakerVolumeLow);
+      WScript.Echo("Speaker Volume Med: " + objItem.SpeakerVolumeMed);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Status Info: " + objItem.StatusInfo);
+      WScript.Echo("String Format: " + objItem.StringFormat);
+      WScript.Echo("Supports Callback: " + objItem.SupportsCallback);
+      WScript.Echo("Supports Synchronous Connect: " + objItem.SupportsSynchronousConnect);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Terminator: " + objItem.Terminator);
+      WScript.Echo("Time Of Last Reset: " + objItem.TimeOfLastReset);
+      WScript.Echo("Tone: " + objItem.Tone);
+      WScript.Echo("Voice Switch Feature: " + objItem.VoiceSwitchFeature);
+      WScript.Echo();
+   }

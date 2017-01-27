@@ -1,0 +1,44 @@
+###
+###
+###
+### Category1 : Desktop Management
+### Category2 : Windows and Explorer Settings
+### Category3 : 
+### Description : Lists the current desktop settings on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Desktop", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Border Width: " + objItem.BorderWidth);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Cool Switch: " + objItem.CoolSwitch);
+      WScript.Echo("Cursor Blink Rate: " + objItem.CursorBlinkRate);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Drag Full Windows: " + objItem.DragFullWindows);
+      WScript.Echo("Grid Granularity: " + objItem.GridGranularity);
+      WScript.Echo("Icon Spacing: " + objItem.IconSpacing);
+      WScript.Echo("Icon Title Face Name: " + objItem.IconTitleFaceName);
+      WScript.Echo("Icon Title Size: " + objItem.IconTitleSize);
+      WScript.Echo("Icon Title Wrap: " + objItem.IconTitleWrap);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Pattern: " + objItem.Pattern);
+      WScript.Echo("ScreenSaver Active: " + objItem.ScreenSaverActive);
+      WScript.Echo("ScreenSaver Executable: " + objItem.ScreenSaverExecutable);
+      WScript.Echo("ScreenSaver Secure: " + objItem.ScreenSaverSecure);
+      WScript.Echo("ScreenSaver Timeout: " + objItem.ScreenSaverTimeout);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Wallpaper: " + objItem.Wallpaper);
+      WScript.Echo("Wallpaper Stretched: " + objItem.WallpaperStretched);
+      WScript.Echo("Wallpaper Tiled: " + objItem.WallpaperTiled);
+      WScript.Echo();
+   }
