@@ -1,0 +1,39 @@
+###
+###
+###
+### Category1 : Other Directory Services
+### Category2 : Local Computer and NT 4 Accounts
+### Category3 : User Accounts
+### Description : Returns information about the user accounts found on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_UserAccount", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Account Type: " + objItem.AccountType);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Disabled: " + objItem.Disabled);
+      WScript.Echo("Domain: " + objItem.Domain);
+      WScript.Echo("Full Name: " + objItem.FullName);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Local Account: " + objItem.LocalAccount);
+      WScript.Echo("Lockout: " + objItem.Lockout);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Password Changeable: " + objItem.PasswordChangeable);
+      WScript.Echo("Password Expires: " + objItem.PasswordExpires);
+      WScript.Echo("Password Required: " + objItem.PasswordRequired);
+      WScript.Echo("SID: " + objItem.SID);
+      WScript.Echo("SID Type: " + objItem.SIDType);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo();
+   }

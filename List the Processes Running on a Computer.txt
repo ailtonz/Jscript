@@ -1,0 +1,68 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Processes
+### Category3 : Processes and Threads
+### Description : Returns information about all the processes running on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_Process", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Command Line: " + objItem.CommandLine);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Creation Date: " + objItem.CreationDate);
+      WScript.Echo("CS Creation Class Name: " + objItem.CSCreationClassName);
+      WScript.Echo("CS Name: " + objItem.CSName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Executable Path: " + objItem.ExecutablePath);
+      WScript.Echo("Execution State: " + objItem.ExecutionState);
+      WScript.Echo("Handle: " + objItem.Handle);
+      WScript.Echo("Handle Count: " + objItem.HandleCount);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Kernel Mode Time: " + objItem.KernelModeTime);
+      WScript.Echo("Maximum Working Set Size: " + objItem.MaximumWorkingSetSize);
+      WScript.Echo("Minimum Working Set Size: " + objItem.MinimumWorkingSetSize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("OS Creation Class Name: " + objItem.OSCreationClassName);
+      WScript.Echo("OS Name: " + objItem.OSName);
+      WScript.Echo("Other Operation Count: " + objItem.OtherOperationCount);
+      WScript.Echo("Other Transfer Count: " + objItem.OtherTransferCount);
+      WScript.Echo("Page Faults: " + objItem.PageFaults);
+      WScript.Echo("Page File Usage: " + objItem.PageFileUsage);
+      WScript.Echo("Parent Process Id: " + objItem.ParentProcessId);
+      WScript.Echo("Peak Page File Usage: " + objItem.PeakPageFileUsage);
+      WScript.Echo("Peak Virtual Size: " + objItem.PeakVirtualSize);
+      WScript.Echo("Peak Working Set Size: " + objItem.PeakWorkingSetSize);
+      WScript.Echo("Priority: " + objItem.Priority);
+      WScript.Echo("Private Page Count: " + objItem.PrivatePageCount);
+      WScript.Echo("Process Id: " + objItem.ProcessId);
+      WScript.Echo("Quota NonPaged Pool Usage: " + objItem.QuotaNonPagedPoolUsage);
+      WScript.Echo("Quota Paged Pool Usage: " + objItem.QuotaPagedPoolUsage);
+      WScript.Echo("Quota Peak NonPaged Pool Usage: " + objItem.QuotaPeakNonPagedPoolUsage);
+      WScript.Echo("Quota Peak Paged Pool Usage: " + objItem.QuotaPeakPagedPoolUsage);
+      WScript.Echo("Read Operation Count: " + objItem.ReadOperationCount);
+      WScript.Echo("Read Transfer Count: " + objItem.ReadTransferCount);
+      WScript.Echo("Session Id: " + objItem.SessionId);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Termination Date: " + objItem.TerminationDate);
+      WScript.Echo("Thread Count: " + objItem.ThreadCount);
+      WScript.Echo("User Mode Time: " + objItem.UserModeTime);
+      WScript.Echo("Virtual Size: " + objItem.VirtualSize);
+      WScript.Echo("Windows Version: " + objItem.WindowsVersion);
+      WScript.Echo("Working Set Size: " + objItem.WorkingSetSize);
+      WScript.Echo("Write Operation Count: " + objItem.WriteOperationCount);
+      WScript.Echo("Write Transfer Count: " + objItem.WriteTransferCount);
+      WScript.Echo();
+   }

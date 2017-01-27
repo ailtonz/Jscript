@@ -1,0 +1,41 @@
+###
+###
+###
+### Category1 : Terminal Services
+### Category2 : Retrieving Terminal Service Properties
+### Category3 : 
+### Description : Lists the Terminal Service configuration settings on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TerminalServiceSetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Active Desktop: " + objItem.ActiveDesktop);
+      WScript.Echo("Allow TS Connections: " + objItem.AllowTSConnections);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Delete Temp Folders: " + objItem.DeleteTempFolders);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Direct Connect License Servers: " + objItem.DirectConnectLicenseServers);
+      WScript.Echo("Home Directory: " + objItem.HomeDirectory);
+      WScript.Echo("Licensing Description: " + objItem.LicensingDescription);
+      WScript.Echo("Licensing Name: " + objItem.LicensingName);
+      WScript.Echo("Licensing Type: " + objItem.LicensingType);
+      WScript.Echo("Logons: " + objItem.Logons);
+      WScript.Echo("Profile Path: " + objItem.ProfilePath);
+      WScript.Echo("Server Name: " + objItem.ServerName);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Single Session: " + objItem.SingleSession);
+      WScript.Echo("Terminal Server Mode: " + objItem.TerminalServerMode);
+      WScript.Echo("User Permission: " + objItem.UserPermission);
+      WScript.Echo("Use Temp Folders: " + objItem.UseTempFolders);
+      WScript.Echo();
+   }

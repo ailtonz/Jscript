@@ -1,0 +1,47 @@
+###
+###
+###
+### Category1 : Operating System
+### Category2 : Dates and Times
+### Category3 : 
+### Description : Retrieve information about the time zone configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_TimeZone", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Bias: " + objItem.Bias);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Daylight Bias: " + objItem.DaylightBias);
+      WScript.Echo("Daylight Day: " + objItem.DaylightDay);
+      WScript.Echo("Daylight Day Of Week: " + objItem.DaylightDayOfWeek);
+      WScript.Echo("Daylight Hour: " + objItem.DaylightHour);
+      WScript.Echo("Daylight Millisecond: " + objItem.DaylightMillisecond);
+      WScript.Echo("Daylight Minute: " + objItem.DaylightMinute);
+      WScript.Echo("Daylight Month: " + objItem.DaylightMonth);
+      WScript.Echo("Daylight Name: " + objItem.DaylightName);
+      WScript.Echo("Daylight Second: " + objItem.DaylightSecond);
+      WScript.Echo("Daylight Year: " + objItem.DaylightYear);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Standard Bias: " + objItem.StandardBias);
+      WScript.Echo("Standard Day: " + objItem.StandardDay);
+      WScript.Echo("Standard Day Of Week: " + objItem.StandardDayOfWeek);
+      WScript.Echo("Standard Hour: " + objItem.StandardHour);
+      WScript.Echo("Standard Millisecond: " + objItem.StandardMillisecond);
+      WScript.Echo("Standard Minute: " + objItem.StandardMinute);
+      WScript.Echo("Standard Month: " + objItem.StandardMonth);
+      WScript.Echo("Standard Name: " + objItem.StandardName);
+      WScript.Echo("Standard Second: " + objItem.StandardSecond);
+      WScript.Echo("Standard Year: " + objItem.StandardYear);
+      WScript.Echo();
+   }

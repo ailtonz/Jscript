@@ -1,0 +1,68 @@
+###
+###
+###
+### Category1 : Hardware
+### Category2 : Batteries and Power Supplies
+### Category3 : 
+### Description : Lists information about the uninterruptible power sources attached to a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_UninterruptiblePowerSupply", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Active Input Voltage: " + objItem.ActiveInputVoltage);
+      WScript.Echo("Availability: " + objItem.Availability);
+      WScript.Echo("Battery Installed: " + objItem.BatteryInstalled);
+      WScript.Echo("Can Turn Off Remotely: " + objItem.CanTurnOffRemotely);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Command File: " + objItem.CommandFile);
+      WScript.Echo("Config Manager Error Code: " + objItem.ConfigManagerErrorCode);
+      WScript.Echo("Config Manager User Config: " + objItem.ConfigManagerUserConfig);
+      WScript.Echo("Creation Class Name: " + objItem.CreationClassName);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Device ID: " + objItem.DeviceID);
+      WScript.Echo("Error Cleared: " + objItem.ErrorCleared);
+      WScript.Echo("Error Description: " + objItem.ErrorDescription);
+      WScript.Echo("Estimated Charge Remaining: " + objItem.EstimatedChargeRemaining);
+      WScript.Echo("Estimated Run Time: " + objItem.EstimatedRunTime);
+      WScript.Echo("First Message Delay: " + objItem.FirstMessageDelay);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Is Switching Supply: " + objItem.IsSwitchingSupply);
+      WScript.Echo("Last Error Code: " + objItem.LastErrorCode);
+      WScript.Echo("Low Battery Signal: " + objItem.LowBatterySignal);
+      WScript.Echo("Message Interval: " + objItem.MessageInterval);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("PNP Device ID: " + objItem.PNPDeviceID);
+      WScript.Echo("Power Fail Signal: " + objItem.PowerFailSignal);
+      try { WScript.Echo("Power Management Capabilities: " + 
+         (objItem.PowerManagementCapabilities.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Power Management Capabilities: null"); }
+      WScript.Echo("Power Management Supported: " + objItem.PowerManagementSupported);
+      WScript.Echo("Range 1 Input Frequency High: " + objItem.Range1InputFrequencyHigh);
+      WScript.Echo("Range 1 Input Frequency Low: " + objItem.Range1InputFrequencyLow);
+      WScript.Echo("Range 1 Input Voltage High: " + objItem.Range1InputVoltageHigh);
+      WScript.Echo("Range 1 Input Voltage Low: " + objItem.Range1InputVoltageLow);
+      WScript.Echo("Range 2 Input Frequency High: " + objItem.Range2InputFrequencyHigh);
+      WScript.Echo("Range 2 Input Frequency Low: " + objItem.Range2InputFrequencyLow);
+      WScript.Echo("Range 2 Input Voltage High: " + objItem.Range2InputVoltageHigh);
+      WScript.Echo("Range 2 Input Voltage Low: " + objItem.Range2InputVoltageLow);
+      WScript.Echo("Remaining Capacity Status: " + objItem.RemainingCapacityStatus);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Status Info: " + objItem.StatusInfo);
+      WScript.Echo("System Creation Class Name: " + objItem.SystemCreationClassName);
+      WScript.Echo("System Name: " + objItem.SystemName);
+      WScript.Echo("Time On Backup: " + objItem.TimeOnBackup);
+      WScript.Echo("Total Output Power: " + objItem.TotalOutputPower);
+      WScript.Echo("Type Of Range Switching: " + objItem.TypeOfRangeSwitching);
+      WScript.Echo("UPS Port: " + objItem.UPSPort);
+      WScript.Echo();
+   }

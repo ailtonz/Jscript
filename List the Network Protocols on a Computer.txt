@@ -1,0 +1,46 @@
+###
+###
+###
+### Category1 : Networking
+### Category2 : Client-Side Management
+### Category3 : Retrieving Network Configuration Information
+### Description : Uses WMI to return information about all the network protocols installed on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_NetworkProtocol", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Connectionless Service: " + objItem.ConnectionlessService);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Guarantees Delivery: " + objItem.GuaranteesDelivery);
+      WScript.Echo("Guarantees Sequencing: " + objItem.GuaranteesSequencing);
+      WScript.Echo("Install Date: " + objItem.InstallDate);
+      WScript.Echo("Maximum Address Size: " + objItem.MaximumAddressSize);
+      WScript.Echo("Maximum Message Size: " + objItem.MaximumMessageSize);
+      WScript.Echo("Message Oriented: " + objItem.MessageOriented);
+      WScript.Echo("Minimum Address Size: " + objItem.MinimumAddressSize);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("PseudoStream Oriented: " + objItem.PseudoStreamOriented);
+      WScript.Echo("Status: " + objItem.Status);
+      WScript.Echo("Supports Broadcasting: " + objItem.SupportsBroadcasting);
+      WScript.Echo("Supports Connect Data: " + objItem.SupportsConnectData);
+      WScript.Echo("Supports Disconnect Data: " + objItem.SupportsDisconnectData);
+      WScript.Echo("Supports Encryption: " + objItem.SupportsEncryption);
+      WScript.Echo("Supports Expedited Data: " + objItem.SupportsExpeditedData);
+      WScript.Echo("Supports Fragmentation: " + objItem.SupportsFragmentation);
+      WScript.Echo("Supports Graceful Closing: " + objItem.SupportsGracefulClosing);
+      WScript.Echo("Supports Guaranteed Bandwidth: " + objItem.SupportsGuaranteedBandwidth);
+      WScript.Echo("Supports Multicasting: " + objItem.SupportsMulticasting);
+      WScript.Echo("Supports Quality of Service: " + objItem.SupportsQualityofService);
+      WScript.Echo();
+   }

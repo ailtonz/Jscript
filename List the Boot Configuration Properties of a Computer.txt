@@ -1,0 +1,32 @@
+###
+###
+###
+### Category1 : Desktop Management
+### Category2 : Startup and Shutdown
+### Category3 : 
+### Description : Returns boot configuration information for a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_BootConfiguration", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Boot Directory: " + objItem.BootDirectory);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Configuration Path: " + objItem.ConfigurationPath);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Last Drive: " + objItem.LastDrive);
+      WScript.Echo("Name: " + objItem.Name);
+      WScript.Echo("Scratch Directory: " + objItem.ScratchDirectory);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo("Temp Directory: " + objItem.TempDirectory);
+      WScript.Echo();
+   }

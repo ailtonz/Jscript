@@ -1,0 +1,51 @@
+###
+###
+###
+### Category1 : Scripting Techniques
+### Category2 : WMI
+### Category3 : 
+### Description : Returns information about how WMI has been configured on a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_WMISetting", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("ASP Script Default Namespace: " + objItem.ASPScriptDefaultNamespace);
+      WScript.Echo("ASP Script Enabled: " + objItem.ASPScriptEnabled);
+      try { WScript.Echo("Autorecover Mofs: " + (objItem.AutorecoverMofs.toArray()).join(",")); }
+         catch(e) { WScript.Echo("Autorecover Mofs: null"); }
+      WScript.Echo("AutoStart Win9X: " + objItem.AutoStartWin9X);
+      WScript.Echo("Backup Interval: " + objItem.BackupInterval);
+      WScript.Echo("Backup Last Time: " + objItem.BackupLastTime);
+      WScript.Echo("Build Version: " + objItem.BuildVersion);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Database Directory: " + objItem.DatabaseDirectory);
+      WScript.Echo("Database Max Size: " + objItem.DatabaseMaxSize);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Enable Anon Win9x Connections: " + objItem.EnableAnonWin9xConnections);
+      WScript.Echo("Enable Events: " + objItem.EnableEvents);
+      WScript.Echo("Enable Startup Heap Preallocation: " + objItem.EnableStartupHeapPreallocation);
+      WScript.Echo("High Threshold On Client Objects: " + objItem.HighThresholdOnClientObjects);
+      WScript.Echo("High Threshold On Events: " + objItem.HighThresholdOnEvents);
+      WScript.Echo("Installation Directory: " + objItem.InstallationDirectory);
+      WScript.Echo("Last Startup Heap Preallocation: " + objItem.LastStartupHeapPreallocation);
+      WScript.Echo("Logging Directory: " + objItem.LoggingDirectory);
+      WScript.Echo("Logging Level: " + objItem.LoggingLevel);
+      WScript.Echo("Low Threshold On Client Objects: " + objItem.LowThresholdOnClientObjects);
+      WScript.Echo("Low Threshold On Events: " + objItem.LowThresholdOnEvents);
+      WScript.Echo("Max Log File Size: " + objItem.MaxLogFileSize);
+      WScript.Echo("Max Wait On Client Objects: " + objItem.MaxWaitOnClientObjects);
+      WScript.Echo("Max Wait On Events: " + objItem.MaxWaitOnEvents);
+      WScript.Echo("Mof Self-Install Directory: " + objItem.MofSelfInstallDirectory);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo();
+   }

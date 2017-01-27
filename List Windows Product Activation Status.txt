@@ -1,0 +1,32 @@
+###
+###
+###
+### Category1 : Desktop Management
+### Category2 : Windows Activation
+### Category3 : 
+### Description : Returns product activation information for a computer.
+###
+###
+###
+var wbemFlagReturnImmediately = 0x10;
+var wbemFlagForwardOnly = 0x20;
+
+   var objWMIService = GetObject("winmgmts:\\\\.\\root\\CIMV2");
+   var colItems = objWMIService.ExecQuery("SELECT * FROM Win32_WindowsProductActivation", "WQL",
+                                          wbemFlagReturnImmediately | wbemFlagForwardOnly);
+
+   var enumItems = new Enumerator(colItems);
+   for (; !enumItems.atEnd(); enumItems.moveNext()) {
+      var objItem = enumItems.item();
+
+      WScript.Echo("Activation Required: " + objItem.ActivationRequired);
+      WScript.Echo("Caption: " + objItem.Caption);
+      WScript.Echo("Description: " + objItem.Description);
+      WScript.Echo("Is Notification On: " + objItem.IsNotificationOn);
+      WScript.Echo("Product ID: " + objItem.ProductID);
+      WScript.Echo("Remaining Evaluation Period: " + objItem.RemainingEvaluationPeriod);
+      WScript.Echo("Remaining Grace Period: " + objItem.RemainingGracePeriod);
+      WScript.Echo("Server Name: " + objItem.ServerName);
+      WScript.Echo("Setting ID: " + objItem.SettingID);
+      WScript.Echo();
+   }
